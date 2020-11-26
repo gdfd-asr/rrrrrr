@@ -1,0 +1,14 @@
+[Unit]
+Description=bot service
+After=network.target
+
+[Service]
+User=bot
+Group=bot
+
+WorkingDirectory=/home/bot/rrrrrr
+Environment="PYTHONPATG=/home/bot/rrrrrr/"
+ExecStart=/usr/bin/python3.7 /home/bot/rrrrrr/bot.py
+
+[Install]
+WantedBy=multi-user.target
