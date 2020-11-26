@@ -43,7 +43,7 @@ if os.path.exists('Bot.session-journal'):
 	os.remove(path)
 	time.sleep(1)
 
-#client = TelegramClient('Bot',api_id, api_hash)
+client = TelegramClient('Bot',api_id, api_hash)
 	
 # инициализируем соединение с БД
 db = SQLighter('db.db')
@@ -201,7 +201,7 @@ async def shutdown(dispatcher: Dispatcher):
 	await dispatcher.storage.close()
 	await dispatcher.storage.wait_closed()
 	
-"""@client.on(events.NewMessage())
+@client.on(events.NewMessage())
 async def normal_handler(event):
 	try:
 		some_id = event.chat_id
@@ -231,16 +231,16 @@ async def normal_handler(event):
 			path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'photo.jpg')
 			os.remove(path)
 		else:
-			await bot.send_message(chat_id,result)"""
+			await bot.send_message(chat_id,result)
 
 
-#async def starte():
-#	await client.run_until_disconnected()
+async def starte():
+	await client.run_until_disconnected()
 
 if __name__ == '__main__':
 	loop = asyncio.get_event_loop()
-	#client.start()
-	#loop.create_task(starte())
+	client.start()
+	loop.create_task(starte())
 	db.create_base()
 	executor.start_polling(dp, on_shutdown=shutdown)
 	executor.start_polling(dp, skip_updates=True)
