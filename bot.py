@@ -1,9 +1,10 @@
+
 import asyncio
 import sys
 import os
 import time 
 from googletrans import Translator
-
+import shutil
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
@@ -41,10 +42,15 @@ if os.path.exists('Bot.session-journal'):
 	os.remove(path)
 	path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'Bot.session')
 	os.remove(path)
+	if os.path.exists('Bot_2.session'):
+		shutil.copyfile("Bot_2.session", "Bot.session")
 	time.sleep(1)
+else:
+	if os.path.exists('Bot.session'):
+		shutil.copyfile("Bot.session", "Bot_2.session")
 
 client = TelegramClient('Bot',api_id, api_hash)
-	
+client.start()	
 # инициализируем соединение с БД
 db = SQLighter('db.db')
 
@@ -70,6 +76,12 @@ async def process_admin_command(message: types.Message, state: FSMContext):
 			await message.answer('Настройка бота закончена')
 		else:
 			await message.answer('Ошибка настройки бота, такого канала получения нет')
+
+@dp.message_handler(commands=['stop'], content_types=types.ContentTypes.TEXT)
+async def process_admin_command(message: types.Message, state: FSMContext):
+	if admin_id == message.from_user.id:
+		await client.disconnect()
+		await message.answer('Бот можно отключать')
 		
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
@@ -239,7 +251,6 @@ async def starte():
 
 if __name__ == '__main__':
 	loop = asyncio.get_event_loop()
-	client.start()
 	loop.create_task(starte())
 	db.create_base()
 	executor.start_polling(dp, on_shutdown=shutdown)
