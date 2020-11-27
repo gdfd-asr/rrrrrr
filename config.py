@@ -1,4 +1,4 @@
-TOKEN = '1092186121:AAF0csUbjyaVnR9yrayv6ubxm1xctx-x_4c'
-admin_id = 880629533
-api_id = 2519137 
-api_hash = 'd598eda16d69d56d292a69977b7e0aa7'
+TOKEN = '1478818959:AAEw7snQ4A5w9jgnIL_i_yqOdGXRF903fMI'
+admin_id = 701422948
+api_id = 2845145  
+api_hash = 'bfc16d125698e30a6e6fb13d4eccacea'
